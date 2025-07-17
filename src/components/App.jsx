@@ -10,8 +10,23 @@ import Hobbies from "./AboutMe/Hobbies"
 import MyStory from "./AboutMe/MyStory";
 import SiteHistory from "./AboutUs/SiteHistory";
 import SiteMission from "./AboutUs/SiteMission"
+import { useState, useEffect } from "react";
 
 function App() {
+  const [reviews, setReviews] = useState([]);
+  useEffect(() => {
+    // Obtiene los datos de reseñas del servidor.
+    fetch('https://emoji-critic.es.tripleten-services.com/v1/reviews').then((res) => {
+      return res.json();
+    }).then((data) => {
+      // Pasa el cuerpo de la respuesta analizada a la función setter.
+      console.log(data);
+      setReviews(data);
+    })
+    .catch(console.error);
+  // Un array de dependencia vacío significa que el hook sólo se ejecuta cuando
+  // se carga el componente.
+  }, []);
   return (
     <div className="App">
       <Header />
